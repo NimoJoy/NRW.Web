@@ -313,6 +313,8 @@ In Vercel project settings, set these variables for **Preview** and **Production
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY`
 
+Vercel does not use your local `.env.local`. Add the variables in **Project Settings > Environment Variables** and redeploy after saving them.
+
 Use a separate Supabase project for Preview if available.
 
 ### 3) Enable preview deployments for pull requests

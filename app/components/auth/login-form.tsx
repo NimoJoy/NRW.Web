@@ -33,7 +33,7 @@ export function LoginForm({ initialMessage }: LoginFormProps) {
 
     if (!getSupabasePublicEnv()) {
       setErrorMessage(
-        "Supabase is not configured. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in .env.local."
+        "Supabase is not configured. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in Vercel project settings for deployed environments, or in .env.local for local development."
       );
       setIsSubmitting(false);
       return;
