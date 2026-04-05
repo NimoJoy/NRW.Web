@@ -251,3 +251,7 @@ All of the following must be true:
 - Deliverables updated:
 	- `app/README.md`
 	- `app/docs/DEVELOPER_NOTES.md`
+
+
+Vercel deployment project link
+https://nrw-web-ten.vercel.app/login
