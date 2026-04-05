@@ -1,5 +1,499 @@
 # NRW Water Billing App
 
+NRW Water Billing App is a Next.js and Supabase application for water utility operations. It supports two operational roles:
+
+- `admin`
+- `meter_reader`
+
+The system combines customer account administration, billing, route-protected operational dashboards, meter reading submission, pressure capture, reporting, and pipeline mapping in a single web application.
+
+## What the project does
+
+This application is designed for day-to-day utility workflows.
+
+### Admin workflows
+
+- Sign in through a company-first login flow.
+- View an authenticated dashboard shell.
+- Manage customer accounts with create and edit flows.
+- Review billing records and update bill status.
+- Monitor meter reader activity.
+- View live reports backed by Supabase data.
+- Review and manage anomaly flags.
+- Manage mapped connections on the map view.
+
+### Meter reader workflows
+
+- Select company context before authentication.
+- Search for an account and inspect previous reading details.
+- Submit a household meter reading with validation and photo upload.
+- Submit pressure readings through a separate workflow.
+- Correct their own submitted readings within a 24-hour window.
+
+### Shared operational features
+
+- Role-based route protection.
+- Company-context enforcement using a cookie-bound tenant selection.
+- Supabase-backed data access for accounts, readings, bills, connections, pipelines, and pressure data.
+- Audit logging for editable operational actions.
+- GIS/QGIS integration for enriched pipeline overlays.
+
+## How the project works
+
+### Authentication and session flow
+
+1. A user opens `/login`.
+2. The login form first asks the user to select a water company.
+3. The user then signs in with Supabase email/password authentication.
+4. The selected company is persisted in the `nrw_company` cookie.
+5. Server-side session helpers validate both authentication and company context.
+6. The app redirects the user to the correct role home route:
+   - `admin` -> `/dashboard`
+   - `meter_reader` -> `/meter-reader/search`
+
+### Authorization model
+
+- Role checks for pages and layouts are handled in server-side auth helpers.
+- API route access is protected separately from page rendering.
+- Company context must match `profiles.org_id` before a user can access authenticated areas.
+- Missing or invalid company context redirects back to login with an explanatory reason.
+
+### Data flow
+
+- Browser-side interactive forms use the Supabase browser client where appropriate.
+- Server components fetch live data for reports, map overlays, accounts, bills, and activity feeds.
+- Protected API routes perform writes for readings, pressure submissions, bills, accounts, anomalies, connection updates, and seeding.
+- Service-role access is restricted to trusted server-side paths.
+
+### Rendering model
+
+- The project uses the Next.js App Router.
+- Server components are the default.
+- Client components are used only where stateful interactions are required.
+- Route groups separate authenticated app routes from auth routes.
+
+## Current application modules
+
+### Authentication
+
+- Company-first login flow.
+- Supabase session handling.
+- Role-aware home redirects.
+
+### Admin surface
+
+- `Dashboard`: high-level shell and status cards.
+- `Admin Accounts`: create, edit, search, filter, pagination, and account details.
+- `Admin Bills`: create and update bill records.
+- `Admin Users`: meter reader activity monitoring.
+- `Reports`: live metrics, trends, filters, and anomaly actions.
+- `Map`: pipeline, account, pressure, and connection visualization.
+
+### Meter reader surface
+
+- `Search`: account lookup and prior reading context.
+- `Submit`: household meter reading submission with photo upload.
+- `Pressure`: pressure capture separate from consumption entry.
+
+## Tech stack
+
+### Application stack
+
+- Next.js `16.1.6`
+- React `19.2.3`
+- TypeScript `5`
+- Tailwind CSS `4`
+- Supabase Auth, database, storage, and SSR helpers
+
+### Data and backend services
+
+- Supabase Postgres for operational data
+- Supabase Auth for email/password authentication
+- Supabase Storage for meter-photo uploads
+- Row-level security policies for role-aware access
+
+### Testing and quality
+
+- Vitest for unit and component tests
+- Testing Library for React component behavior
+- Playwright for end-to-end verification
+- ESLint for linting
+- Prettier for formatting checks
+
+### Hosting and delivery
+
+- Vercel for hosting and runtime environments
+- GitHub Actions for CI and controlled deployment automation
+
+## Third-party dependencies
+
+This section covers the external packages and services used by the project.
+
+### Runtime dependencies
+
+- `@supabase/ssr` `^0.9.0`: Supabase SSR integration for cookie-aware clients.
+- `@supabase/supabase-js` `^2.99.2`: Supabase client SDK for auth, database, and storage access.
+- `next` `16.1.6`: application framework.
+- `next-themes` `^0.4.6`: theme handling.
+- `react` `19.2.3`: UI library.
+- `react-dom` `19.2.3`: DOM renderer for React.
+
+### Development and test dependencies
+
+- `@playwright/test` `^1.58.2`: E2E test runner.
+- `@tailwindcss/postcss` `^4`: Tailwind PostCSS integration.
+- `@testing-library/jest-dom` `^6.9.1`: DOM assertions for tests.
+- `@testing-library/react` `^16.3.2`: React component test utilities.
+- `@types/node` `^20`: Node.js TypeScript types.
+- `@types/react` `^19`: React TypeScript types.
+- `@types/react-dom` `^19`: React DOM TypeScript types.
+- `eslint` `^9`: linting engine.
+- `eslint-config-next` `16.1.6`: Next.js ESLint rules.
+- `jsdom` `^29.0.0`: DOM environment for component tests.
+- `prettier` `^3.8.1`: formatting and formatting checks.
+- `tailwindcss` `^4`: utility-first CSS framework.
+- `typescript` `^5`: static typing.
+- `vitest` `^4.1.0`: unit and component test runner.
+
+### Platform and service dependencies
+
+- Supabase: authentication, database, storage, and RLS enforcement.
+- Vercel: deployment target, environment management, and hosting.
+- GitHub Actions: CI, preview deployment orchestration, and production deployment orchestration.
+- Vercel CLI: used by local deployment scripts and GitHub Actions deployment workflows.
+
+### GitHub Actions marketplace actions used
+
+- `actions/checkout@v4`
+- `actions/setup-node@v4`
+- `actions/github-script@v7`
+- `actions/upload-artifact@v4`
+
+## Project structure
+
+```text
+app/
+  app/
+    (auth)/
+    (app)/
+    api/
+  components/
+  docs/
+  e2e/
+  lib/
+  public/
+  scripts/
+  supabase/sql/
+  test/
+```
+
+### Key directories
+
+- `app/app/(auth)`: authentication routes.
+- `app/app/(app)`: authenticated application routes.
+- `app/app/api`: internal API handlers.
+- `app/components`: feature and shared UI components.
+- `app/lib/auth`: session, company-context, and access-control helpers.
+- `app/lib/supabase`: browser, server, admin, and env helpers.
+- `app/lib/phase9`: data mapping, types, and formatting helpers for live features.
+- `app/scripts`: bootstrap and verification scripts.
+- `app/supabase/sql`: SQL setup scripts for schema, RLS, storage, connections, pressure, and audit logging.
+- `.github/workflows`: CI and deployment workflows.
+
+## Prerequisites
+
+- Node.js `20+`
+- A Supabase project
+- A Vercel account for hosted deployment
+- A GitHub repository if you want CI/CD and automated deployments
+
+## Environment variables
+
+Copy `.env.local.example` to `.env.local` for local development.
+
+### Required for local development and hosted environments
+
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
+
+### Optional GIS integration
+
+- `GIS_PIPELINES_GEOJSON_URL`
+- `GIS_PIPELINES_API_TOKEN`
+- `GIS_QGIS_SERVER_URL`
+- `GIS_QGIS_PIPELINES_TYPENAME`
+- `GIS_QGIS_WFS_VERSION`
+- `GIS_QGIS_WFS_COUNT`
+
+### Optional bootstrap and seeded-user configuration
+
+- `PHASE_B_BOOTSTRAP_TOKEN`
+- `SEED_ADMIN_EMAIL`
+- `SEED_ADMIN_PASSWORD`
+- `SEED_ADMIN2_EMAIL`
+- `SEED_ADMIN2_PASSWORD`
+- `SEED_READER_EMAIL`
+- `SEED_READER_PASSWORD`
+- `SEED_READER2_EMAIL`
+- `SEED_READER2_PASSWORD`
+
+### Environment variable guidance
+
+- `NEXT_PUBLIC_*` variables are compiled into the client bundle and must exist in Vercel for the target environment before deployment.
+- Vercel does not read your local `.env.local` file.
+- `SUPABASE_SERVICE_ROLE_KEY` must never be exposed as a `NEXT_PUBLIC_*` variable.
+- If you deploy preview builds, set the required Supabase variables for `Preview` as well as `Production`.
+
+## How to replicate the project locally
+
+### 1. Clone and install
+
+From the repository root:
+
+```bash
+cd app
+npm install
+```
+
+If Windows PowerShell blocks npm scripts on your machine, use `npm.cmd` instead of `npm`.
+
+### 2. Create local environment file
+
+Copy the example file and populate it with real values:
+
+```bash
+copy .env.local.example .env.local
+```
+
+Set at least:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+```
+
+### 3. Create and configure Supabase
+
+In the Supabase dashboard:
+
+1. Create a project.
+2. Open `Project Settings > API`.
+3. Copy:
+   - Project URL -> `NEXT_PUBLIC_SUPABASE_URL`
+   - anon public key -> `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - service_role secret key -> `SUPABASE_SERVICE_ROLE_KEY`
+
+### 4. Apply the SQL setup scripts
+
+Run these scripts in the Supabase SQL Editor in this order:
+
+1. `supabase/sql/phase3_auth_rbac.sql`
+2. `supabase/sql/phase6_schema_storage_rls.sql`
+3. `supabase/sql/phase7_connections_mapping.sql`
+4. `supabase/sql/phase8_pressure_stream.sql`
+5. `supabase/sql/phase9_editable_dashboards_audit.sql`
+
+These scripts provision the core schema, storage bucket, RLS policies, connection mapping support, pressure workflow support, and audit logging.
+
+### 5. Seed sample data
+
+From `app/`:
+
+```bash
+npm run seed:phase-b
+```
+
+To verify the seed output:
+
+```bash
+npm run seed:phase-b:verify
+```
+
+Default seeded credentials are:
+
+- Admin: `admin@nrw-water.local` / `Admin#12345`
+- Admin 2: `admin2@nrw-water.local` / `Admin#12345`
+- Meter reader: `reader@nrw-water.local` / `Reader#12345`
+- Meter reader 2: `reader2@nrw-water.local` / `Reader#12345`
+
+### 6. Start the app
+
+```bash
+npm run dev
+```
+
+Open `http://localhost:3000`.
+
+### 7. Test the main flows
+
+1. Select the company `NRW-WATER-001` on the login screen.
+2. Sign in with one of the seeded users.
+3. Verify the redirect lands on the correct role home page.
+4. Exercise account search, reading submission, reports, and map views.
+
+## Quality commands
+
+From `app/`:
+
+```bash
+npm run lint
+npm run typecheck
+npm run format:check
+npm run test
+npm run test:e2e
+npm run test:e2e:smoke
+npm run build
+npm run check
+```
+
+### Script reference
+
+- `npm run dev`: run the development server.
+- `npm run build`: create a production build.
+- `npm run start`: run the production server locally.
+- `npm run seed:phase-b`: create or update baseline demo data.
+- `npm run seed:phase-b:verify`: verify seeded dataset health.
+- `npm run lint`: run ESLint.
+- `npm run typecheck`: run TypeScript checks.
+- `npm run format`: format the repository.
+- `npm run format:check`: verify formatting.
+- `npm run test`: run unit and component tests.
+- `npm run test:watch`: run Vitest in watch mode.
+- `npm run test:e2e`: run Playwright E2E tests.
+- `npm run test:e2e:smoke`: run smoke-tagged Playwright tests.
+- `npm run check`: run lint, typecheck, formatting, and unit tests together.
+- `npm run deploy:preview`: local preview deployment through Vercel CLI.
+- `npm run deploy:production`: local production deployment through Vercel CLI.
+
+## Deployment with Vercel
+
+Vercel is the hosting platform for this app. It provides the runtime environment, build output hosting, and environment-variable management.
+
+### Required Vercel project setup
+
+1. Import the repository into Vercel.
+2. Set the project Root Directory to `app`.
+3. Keep the framework preset as Next.js.
+4. Add environment variables in `Project Settings > Environment Variables`.
+
+### Required Vercel environment variables
+
+Set these for both `Preview` and `Production` unless you intentionally use different environment layouts:
+
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
+
+Add optional GIS and bootstrap variables only if you use those features.
+
+### Important Vercel behavior
+
+- Vercel does not use your local `.env.local` file.
+- `NEXT_PUBLIC_*` values are injected at build time.
+- If you add or change env vars, you must redeploy.
+- Preview and Production env scopes are separate.
+
+## How GitHub Actions fit into deployment
+
+This repository uses GitHub Actions for both quality gates and Vercel deployment orchestration.
+
+### CI workflow
+
+Workflow file: `.github/workflows/ci.yml`
+
+Triggers:
+
+- All pull requests
+- Pushes to `main`
+
+What it does:
+
+1. Installs dependencies in `app/`.
+2. Runs linting.
+3. Runs TypeScript checks.
+4. Runs Prettier format checks.
+5. Runs unit and component tests.
+6. Builds the app.
+7. Runs Playwright E2E tests.
+8. Uploads the Playwright report artifact.
+
+This workflow acts as the quality baseline before deployment.
+
+### Vercel deployment workflow
+
+Workflow file: `.github/workflows/vercel-deploy.yml`
+
+Triggers:
+
+- Pull requests to `main`
+- Pushes to `main`
+- Manual `workflow_dispatch`
+
+What it does:
+
+#### Preview deployments
+
+- Triggered for same-repository pull requests targeting `main`.
+- Pulls Vercel preview environment configuration.
+- Builds with the Vercel CLI.
+- Deploys a preview build.
+- Posts or updates the preview URL in the pull request comments.
+
+#### Production deployments
+
+- Triggered on pushes to `main` or manual dispatch.
+- Pulls Vercel production environment configuration.
+- Builds with the Vercel CLI.
+- Deploys the production build.
+- Installs Playwright browsers.
+- Runs smoke E2E tests against the deployed URL.
+
+### Required GitHub repository configuration
+
+The deployment workflow expects these values in GitHub:
+
+- Repository secret: `VERCEL_TOKEN`
+- Repository variable: `VERCEL_ORG_ID`
+- Repository variable: `VERCEL_PROJECT_ID`
+
+### Why both Vercel and GitHub Actions are used
+
+- Vercel provides the hosted environment and runtime configuration.
+- GitHub Actions provides repeatable automation for validation and deployment.
+- The workflow uses Vercel CLI so deployment is versioned and enforced from the repository.
+- Production smoke tests run immediately after deployment, which gives an additional safeguard beyond build success.
+
+## Operational notes
+
+### Roles
+
+- `admin` users land on `/dashboard`.
+- `meter_reader` users land on `/meter-reader/search`.
+- If no valid role exists in metadata, the fallback role is `meter_reader`.
+
+### Company context
+
+- Supported company selection is currently anchored to `NRW-WATER-001`.
+- Access requires the company cookie to match `profiles.org_id`.
+
+### Audit logging
+
+Editable flows write to `audit_logs` once the audit SQL script is applied.
+
+### Pressure workflow separation
+
+- Household consumption is stored in `readings`.
+- Pressure capture is stored in `pressure_readings`.
+- The app deliberately keeps these as separate operational workflows.
+
+## Additional documentation
+
+- `docs/DEVELOPER_NOTES.md`: structure, conventions, and contributor guidance.
+- `docs/ADMIN_USAGE_GUIDE.md`: operational admin guidance for reports and anomaly actions.
+# NRW Water Billing App
+
 Next.js + Supabase project for water billing workflows with two roles:
 
 - `admin`
