@@ -1,40 +1,31 @@
-export default function LoginPage() {
+import { Card } from "@/components/ui/card";
+import { LoginForm } from "@/components/auth/login-form";
+import { redirectIfAuthenticated } from "@/lib/auth/session";
+
+type LoginPageProps = {
+  searchParams?: Promise<{ reason?: string }>;
+};
+
+function getReasonMessage(reason: string | undefined) {
+  if (reason === "company-context-required") {
+    return "Select your water company and sign in again to continue.";
+  }
+
+  if (reason === "role-mismatch") {
+    return "Your account role does not have access to that page.";
+  }
+
+  return undefined;
+}
+
+export default async function LoginPage({ searchParams }: LoginPageProps) {
+  await redirectIfAuthenticated();
+  const resolvedSearchParams = await searchParams;
+  const initialMessage = getReasonMessage(resolvedSearchParams?.reason);
+
   return (
-    <section className="space-y-5 rounded-lg border border-black/10 p-6">
-      <h2 className="text-xl font-semibold">Sign in</h2>
-
-      <form className="space-y-4">
-        <div className="space-y-1">
-          <label className="text-sm font-medium" htmlFor="email">
-            Email
-          </label>
-          <input
-            id="email"
-            type="email"
-            placeholder="you@example.com"
-            className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
-          />
-        </div>
-
-        <div className="space-y-1">
-          <label className="text-sm font-medium" htmlFor="password">
-            Password
-          </label>
-          <input
-            id="password"
-            type="password"
-            placeholder="••••••••"
-            className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
-          />
-        </div>
-
-        <button
-          type="button"
-          className="w-full rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background"
-        >
-          Continue
-        </button>
-      </form>
-    </section>
+    <Card title="Sign in" description="Use your account credentials to continue.">
+      <LoginForm initialMessage={initialMessage} />
+    </Card>
   );
 }
