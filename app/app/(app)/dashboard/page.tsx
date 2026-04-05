@@ -14,8 +14,13 @@ export default function DashboardPage() {
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {dashboardMetrics.map((metric) => (
           <Card key={metric.label} title={metric.label}>
-            <div className="flex items-center justify-between">
-              <p className="text-2xl font-semibold">{metric.value}</p>
+            <div className="flex items-end justify-between gap-4">
+              <div>
+                <p className="text-3xl font-semibold tracking-tight">{metric.value}</p>
+                <p className="mt-2 text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--muted)]">
+                  Updated from current operational dataset
+                </p>
+              </div>
               <StatusBadge label={metric.label} tone={metric.tone} />
             </div>
           </Card>
@@ -27,7 +32,7 @@ export default function DashboardPage() {
           title="Foundation Status"
           description="Phase 2 tracks shared UI and route skeleton readiness."
         >
-          <ul className="space-y-2 text-sm text-foreground/80">
+          <ul className="space-y-2 text-sm leading-6 text-[color:var(--muted)]">
             <li>• Shared components created and reusable.</li>
             <li>• Route groups structured for auth, admin, meter reader, map, and reports.</li>
             <li>• Mock data available for all page shells.</li>
@@ -35,7 +40,7 @@ export default function DashboardPage() {
         </Card>
 
         <Card title="Next Approval Gate" description="Phase 3 starts only after your approval.">
-          <p className="text-sm text-foreground/70">
+          <p className="text-sm leading-6 text-[color:var(--muted)]">
             Meter reader and admin feature details remain as placeholder UI until you authorize the
             next phase.
           </p>

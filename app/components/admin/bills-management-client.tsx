@@ -181,7 +181,7 @@ export function BillsManagementClient({ initialBills }: BillsManagementClientPro
           void handleBillStatusChange(billKey, event.target.value as BillStatus);
         }}
         disabled={updatingBillId === billKey}
-        className="w-full rounded-md border border-black/20 px-2 py-1 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+        className="w-full px-2 py-1 text-sm"
       >
         <option value="paid">paid</option>
         <option value="unpaid">unpaid</option>
@@ -265,7 +265,7 @@ export function BillsManagementClient({ initialBills }: BillsManagementClientPro
                 setFormState((current) => ({ ...current, accountNumber: event.target.value }))
               }
               placeholder="ACC-1001"
-              className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+              className="w-full px-3 py-2 text-sm"
               required
             />
           </FormField>
@@ -278,7 +278,7 @@ export function BillsManagementClient({ initialBills }: BillsManagementClientPro
                 setFormState((current) => ({ ...current, billingPeriod: event.target.value }))
               }
               placeholder="2026-03"
-              className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+              className="w-full px-3 py-2 text-sm"
               required
             />
           </FormField>
@@ -291,7 +291,7 @@ export function BillsManagementClient({ initialBills }: BillsManagementClientPro
                 setFormState((current) => ({ ...current, amountDue: event.target.value }))
               }
               placeholder="12000.00"
-              className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+              className="w-full px-3 py-2 text-sm"
               required
             />
           </FormField>
@@ -306,7 +306,7 @@ export function BillsManagementClient({ initialBills }: BillsManagementClientPro
                   status: event.target.value as BillStatus,
                 }))
               }
-              className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+              className="w-full px-3 py-2 text-sm"
             >
               <option value="unpaid">unpaid</option>
               <option value="paid">paid</option>
@@ -317,16 +317,14 @@ export function BillsManagementClient({ initialBills }: BillsManagementClientPro
           <button
             type="submit"
             disabled={isCreatingBill}
-            className="rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background sm:col-span-2 lg:col-span-1"
+            className="app-btn-primary sm:col-span-2 lg:col-span-1"
           >
             {isCreatingBill ? "Creating..." : "Create Bill"}
           </button>
         </form>
 
         {formMessage ? (
-          <p className="mt-3 rounded-md border border-black/20 bg-foreground/[0.03] px-3 py-2 text-sm text-foreground/80">
-            {formMessage}
-          </p>
+          <p className="app-note mt-3 text-sm">{formMessage}</p>
         ) : null}
       </Card>
 
@@ -340,7 +338,7 @@ export function BillsManagementClient({ initialBills }: BillsManagementClientPro
                 resetToFirstPage();
               }}
               placeholder="Search by account or billing period"
-              className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+              className="w-full px-3 py-2 text-sm"
             />
 
             <select
@@ -349,7 +347,7 @@ export function BillsManagementClient({ initialBills }: BillsManagementClientPro
                 setStatusFilter(event.target.value as StatusFilter);
                 resetToFirstPage();
               }}
-              className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+              className="w-full px-3 py-2 text-sm"
             >
               {statusFilters.map((option) => (
                 <option key={option} value={option}>
@@ -379,7 +377,7 @@ export function BillsManagementClient({ initialBills }: BillsManagementClientPro
                 type="button"
                 onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}
                 disabled={safeCurrentPage === 1}
-                className="rounded-md border border-black/20 px-3 py-1.5 text-sm disabled:cursor-not-allowed disabled:opacity-60"
+                className="app-btn-secondary app-btn-compact disabled:cursor-not-allowed disabled:opacity-60"
               >
                 Previous
               </button>
@@ -388,7 +386,7 @@ export function BillsManagementClient({ initialBills }: BillsManagementClientPro
                 type="button"
                 onClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}
                 disabled={safeCurrentPage === totalPages}
-                className="rounded-md border border-black/20 px-3 py-1.5 text-sm disabled:cursor-not-allowed disabled:opacity-60"
+                className="app-btn-secondary app-btn-compact disabled:cursor-not-allowed disabled:opacity-60"
               >
                 Next
               </button>

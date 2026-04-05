@@ -54,10 +54,7 @@ export default async function AccountDetailsPage({ params }: AccountDetailsPageP
         title={`Account ${account.accountNumber}`}
         description={`${account.customerName} • ${account.pipeline}`}
         actions={
-          <Link
-            href="/admin/accounts"
-            className="rounded-md border border-black/20 px-3 py-1.5 text-sm"
-          >
+          <Link href="/admin/accounts" className="app-btn-secondary">
             Back to Accounts
           </Link>
         }

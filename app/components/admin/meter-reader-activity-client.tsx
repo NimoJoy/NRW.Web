@@ -73,7 +73,7 @@ export function MeterReaderActivityClient({ initialUsers }: MeterReaderActivityC
             resetToFirstPage();
           }}
           placeholder="Search name or activity"
-          className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+          className="w-full px-3 py-2 text-sm"
         />
 
         <select
@@ -82,7 +82,7 @@ export function MeterReaderActivityClient({ initialUsers }: MeterReaderActivityC
             setRoleFilter(event.target.value as RoleFilter);
             resetToFirstPage();
           }}
-          className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+          className="w-full px-3 py-2 text-sm"
         >
           {roleFilters.map((option) => (
             <option key={option} value={option}>
@@ -101,7 +101,7 @@ export function MeterReaderActivityClient({ initialUsers }: MeterReaderActivityC
             setStatusFilter(event.target.value as StatusFilter);
             resetToFirstPage();
           }}
-          className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+          className="w-full px-3 py-2 text-sm"
         >
           {statusFilters.map((option) => (
             <option key={option} value={option}>
@@ -127,7 +127,7 @@ export function MeterReaderActivityClient({ initialUsers }: MeterReaderActivityC
             type="button"
             onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}
             disabled={safeCurrentPage === 1}
-            className="rounded-md border border-black/20 px-3 py-1.5 text-sm disabled:cursor-not-allowed disabled:opacity-60"
+            className="app-btn-secondary app-btn-compact disabled:cursor-not-allowed disabled:opacity-60"
           >
             Previous
           </button>
@@ -136,7 +136,7 @@ export function MeterReaderActivityClient({ initialUsers }: MeterReaderActivityC
             type="button"
             onClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}
             disabled={safeCurrentPage === totalPages}
-            className="rounded-md border border-black/20 px-3 py-1.5 text-sm disabled:cursor-not-allowed disabled:opacity-60"
+            className="app-btn-secondary app-btn-compact disabled:cursor-not-allowed disabled:opacity-60"
           >
             Next
           </button>

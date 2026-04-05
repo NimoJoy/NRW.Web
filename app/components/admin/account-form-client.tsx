@@ -152,7 +152,7 @@ export function AccountFormClient({
               }))
             }
             placeholder="ACC-1201"
-            className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+            className="w-full px-3 py-2 text-sm"
             required
           />
         </FormField>
@@ -166,7 +166,7 @@ export function AccountFormClient({
             setValues((current) => ({ ...current, customerName: event.target.value }))
           }
           placeholder="Customer name"
-          className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+          className="w-full px-3 py-2 text-sm"
           required
         />
       </FormField>
@@ -179,7 +179,7 @@ export function AccountFormClient({
             setValues((current) => ({ ...current, address: event.target.value }))
           }
           placeholder="Address"
-          className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+          className="w-full px-3 py-2 text-sm"
         />
       </FormField>
 
@@ -190,7 +190,7 @@ export function AccountFormClient({
           onChange={(event) =>
             setValues((current) => ({ ...current, pipelineId: event.target.value }))
           }
-          className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+          className="w-full px-3 py-2 text-sm"
         >
           <option value="">Unassigned</option>
           {pipelineOptions.map((pipeline) => (
@@ -208,7 +208,7 @@ export function AccountFormClient({
           onChange={(event) =>
             setValues((current) => ({ ...current, status: event.target.value as AccountStatus }))
           }
-          className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+          className="w-full px-3 py-2 text-sm"
         >
           <option value="active">active</option>
           <option value="pending">pending</option>
@@ -225,7 +225,7 @@ export function AccountFormClient({
               setValues((current) => ({ ...current, latitude: event.target.value }))
             }
             placeholder="-1.2378"
-            className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+            className="w-full px-3 py-2 text-sm"
           />
         </FormField>
 
@@ -237,27 +237,23 @@ export function AccountFormClient({
               setValues((current) => ({ ...current, longitude: event.target.value }))
             }
             placeholder="36.8243"
-            className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+            className="w-full px-3 py-2 text-sm"
           />
         </FormField>
       </div>
 
       {errorMessage ? (
-        <p className="rounded-md border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-700">
-          {errorMessage}
-        </p>
+        <p className="app-banner app-banner-error">{errorMessage}</p>
       ) : null}
 
       {successMessage ? (
-        <p className="rounded-md border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 text-sm text-emerald-700">
-          {successMessage}
-        </p>
+        <p className="app-banner app-banner-success">{successMessage}</p>
       ) : null}
 
       <button
         type="submit"
         disabled={isSubmitting}
-        className="rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background disabled:cursor-not-allowed disabled:opacity-70"
+        className="app-btn-primary disabled:cursor-not-allowed disabled:opacity-70"
       >
         {isSubmitting ? "Saving..." : mode === "create" ? "Create Account" : "Save Account Changes"}
       </button>

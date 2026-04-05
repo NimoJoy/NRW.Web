@@ -264,7 +264,7 @@ export function PipelineMapClient({
             <select
               value={selectedPipelineId}
               onChange={(event) => setSelectedPipelineId(event.target.value)}
-              className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+              className="w-full px-3 py-2 text-sm"
             >
               <option value="all">All pipelines</option>
               {pipelines.map((pipeline) => (
@@ -274,7 +274,7 @@ export function PipelineMapClient({
               ))}
             </select>
 
-            <label className="flex items-center gap-2 rounded-md border border-black/20 px-3 py-2 text-sm">
+            <label className="flex items-center gap-2 rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3 py-2 text-sm shadow-[var(--soft-shadow)]">
               <input
                 type="checkbox"
                 checked={showPipelines}
@@ -283,7 +283,7 @@ export function PipelineMapClient({
               Pipelines layer
             </label>
 
-            <label className="flex items-center gap-2 rounded-md border border-black/20 px-3 py-2 text-sm">
+            <label className="flex items-center gap-2 rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3 py-2 text-sm shadow-[var(--soft-shadow)]">
               <input
                 type="checkbox"
                 checked={showAccounts}
@@ -292,7 +292,7 @@ export function PipelineMapClient({
               Account markers
             </label>
 
-            <label className="flex items-center gap-2 rounded-md border border-black/20 px-3 py-2 text-sm">
+            <label className="flex items-center gap-2 rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3 py-2 text-sm shadow-[var(--soft-shadow)]">
               <input
                 type="checkbox"
                 checked={showPressurePoints}
@@ -302,7 +302,7 @@ export function PipelineMapClient({
             </label>
           </div>
 
-          <div className="relative h-80 overflow-hidden rounded-md border border-dashed border-black/20 bg-foreground/[0.03]">
+          <div className="app-placeholder-surface relative h-80 overflow-hidden">
             <svg
               viewBox="0 0 100 100"
               className="absolute inset-0 h-full w-full"
@@ -344,7 +344,7 @@ export function PipelineMapClient({
                     }
                   }
                 }}
-                className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full border border-black/30 bg-background px-2 py-1 text-xs shadow-sm"
+                className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full border border-[color:var(--border-strong)] bg-[color:var(--surface-strong)] px-2 py-1 text-xs shadow-[var(--soft-shadow)]"
                 style={{ left: `${marker.x}%`, top: `${marker.y}%` }}
               >
                 {marker.type === "account" ? "A" : "P"}
@@ -396,7 +396,7 @@ export function PipelineMapClient({
             <p className="text-sm text-foreground/70">No pipeline records available yet.</p>
           )}
 
-          <div className="mt-4 border-t border-black/10 pt-4">
+          <div className="mt-4 border-t border-[color:var(--border)] pt-4">
             {selectedMarker ? (
               <div className="space-y-2 text-sm">
                 <p>
@@ -430,7 +430,7 @@ export function PipelineMapClient({
             )}
           </div>
 
-          <div className="mt-4 border-t border-black/10 pt-4">
+          <div className="mt-4 border-t border-[color:var(--border)] pt-4">
             {selectedConnection ? (
               <div className="space-y-2 text-sm">
                 <p>
@@ -471,7 +471,7 @@ export function PipelineMapClient({
                   key={connection.id}
                   role="button"
                   tabIndex={0}
-                  className="w-full rounded-md border border-black/15 px-3 py-2 text-left text-sm hover:bg-foreground/5"
+                  className="w-full rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3 py-3 text-left text-sm shadow-[var(--soft-shadow)] transition hover:border-[color:var(--border-strong)] hover:bg-[color:var(--surface-soft)]"
                   onClick={() => setSelectedConnectionId(connection.id)}
                   onKeyDown={(event) => {
                     if (event.key === "Enter" || event.key === " ") {
@@ -517,14 +517,14 @@ export function PipelineMapClient({
           >
             <form className="space-y-3" onSubmit={submitConnectionForm}>
               {editingConnectionId ? (
-                <div className="rounded-md border border-black/15 px-3 py-2 text-sm">
+                <div className="app-note text-sm">
                   <span className="text-foreground/70">Account:</span> {formState.accountNumber}
                 </div>
               ) : (
                 <select
                   value={formState.accountNumber}
                   onChange={(event) => handleAccountSelection(event.target.value)}
-                  className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+                  className="w-full px-3 py-2 text-sm"
                 >
                   <option value="">Select account</option>
                   {unmappedAccountOptions.map((option) => (
@@ -540,7 +540,7 @@ export function PipelineMapClient({
                 onChange={(event) =>
                   setFormState((current) => ({ ...current, pipelineId: event.target.value }))
                 }
-                className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+                className="w-full px-3 py-2 text-sm"
               >
                 <option value="">Select pipeline</option>
                 {pipelines.map((pipeline) => (
@@ -559,7 +559,7 @@ export function PipelineMapClient({
                     setFormState((current) => ({ ...current, latitude: event.target.value }))
                   }
                   placeholder="Latitude"
-                  className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+                  className="w-full px-3 py-2 text-sm"
                 />
                 <input
                   type="number"
@@ -569,7 +569,7 @@ export function PipelineMapClient({
                     setFormState((current) => ({ ...current, longitude: event.target.value }))
                   }
                   placeholder="Longitude"
-                  className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+                  className="w-full px-3 py-2 text-sm"
                 />
               </div>
 
@@ -581,7 +581,7 @@ export function PipelineMapClient({
                     status: event.target.value as ConnectionStatus,
                   }))
                 }
-                className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+                className="w-full px-3 py-2 text-sm"
               >
                 <option value="active">active</option>
                 <option value="planned">planned</option>
@@ -594,17 +594,17 @@ export function PipelineMapClient({
                   setFormState((current) => ({ ...current, notes: event.target.value }))
                 }
                 placeholder="Notes (optional)"
-                className="h-20 w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+                className="h-20 w-full px-3 py-2 text-sm"
               />
 
-              {formError ? <p className="text-sm text-foreground">{formError}</p> : null}
-              {formSuccess ? <p className="text-sm text-foreground">{formSuccess}</p> : null}
+              {formError ? <p className="app-banner app-banner-error">{formError}</p> : null}
+              {formSuccess ? <p className="app-banner app-banner-success">{formSuccess}</p> : null}
 
               <div className="flex gap-2">
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="rounded-md border border-black/20 px-3 py-2 text-sm font-medium hover:bg-foreground/10 disabled:opacity-60"
+                  className="app-btn-secondary disabled:opacity-60"
                 >
                   {isSubmitting
                     ? "Saving..."
@@ -617,7 +617,7 @@ export function PipelineMapClient({
                   <button
                     type="button"
                     onClick={resetForm}
-                    className="rounded-md border border-black/20 px-3 py-2 text-sm hover:bg-foreground/10"
+                    className="app-btn-ghost"
                   >
                     Cancel edit
                   </button>

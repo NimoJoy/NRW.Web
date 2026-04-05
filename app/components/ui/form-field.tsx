@@ -9,18 +9,18 @@ type FormFieldProps = {
 
 export function FormField({ id, label, required = false, hint, error, children }: FormFieldProps) {
   return (
-    <div className="space-y-1.5">
-      <label htmlFor={id} className="text-sm font-medium">
+    <div className="space-y-2">
+      <label htmlFor={id} className="text-sm font-semibold text-foreground">
         {label}
-        {required ? <span className="text-foreground/60"> *</span> : null}
+        {required ? <span className="text-[color:var(--muted)]"> *</span> : null}
       </label>
 
       {children}
 
       {error ? (
-        <p className="text-xs text-red-600">{error}</p>
+        <p className="text-xs font-medium text-[color:var(--danger)]">{error}</p>
       ) : hint ? (
-        <p className="text-xs text-foreground/60">{hint}</p>
+        <p className="text-xs text-[color:var(--muted)]">{hint}</p>
       ) : null}
     </div>
   );

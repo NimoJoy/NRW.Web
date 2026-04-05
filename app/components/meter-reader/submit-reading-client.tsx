@@ -356,14 +356,14 @@ export function SubmitReadingClient() {
                 value={accountNumber}
                 onChange={(event) => handleAccountNumberChange(event.target.value)}
                 placeholder="ACC-1001"
-                className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+                className="w-full px-3 py-2 text-sm"
                 required
               />
               <button
                 type="button"
                 onClick={() => void fetchPreviousReading(accountNumber)}
                 disabled={isLookupLoading}
-                className="shrink-0 rounded-md border border-black/20 px-3 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-70"
+                className="app-btn-secondary shrink-0 disabled:cursor-not-allowed disabled:opacity-70"
               >
                 {isLookupLoading ? "Loading..." : "Load Previous"}
               </button>
@@ -380,7 +380,7 @@ export function SubmitReadingClient() {
               value={previousReading}
               onChange={(event) => setPreviousReading(event.target.value)}
               placeholder="1203"
-              className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+              className="w-full px-3 py-2 text-sm"
             />
           </FormField>
 
@@ -398,7 +398,7 @@ export function SubmitReadingClient() {
                 setErrors((currentErrors) => ({ ...currentErrors, currentReading: undefined }));
               }}
               placeholder="1260"
-              className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+              className="w-full px-3 py-2 text-sm"
               required
             />
           </FormField>
@@ -410,21 +410,19 @@ export function SubmitReadingClient() {
               accept="image/*"
               capture="environment"
               onChange={handlePhotoChange}
-              className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+              className="w-full px-3 py-2 text-sm"
               required
             />
           </FormField>
 
           {submissionError ? (
-            <p className="sm:col-span-2 rounded-md border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-700">
-              {submissionError}
-            </p>
+            <p className="app-banner app-banner-error sm:col-span-2">{submissionError}</p>
           ) : null}
 
           <button
             type="submit"
             disabled={isSubmitting}
-            className="sm:col-span-2 w-full rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background sm:w-auto"
+            className="app-btn-primary sm:col-span-2 w-full sm:w-auto"
           >
             {isSubmitting ? "Saving..." : "Save Reading"}
           </button>
@@ -432,9 +430,7 @@ export function SubmitReadingClient() {
       </Card>
 
       {confirmationMessage ? (
-        <div className="rounded-md border border-emerald-300 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
-          {confirmationMessage}
-        </div>
+        <div className="app-banner app-banner-success">{confirmationMessage}</div>
       ) : null}
 
       <Card
@@ -445,37 +441,37 @@ export function SubmitReadingClient() {
           <div className="space-y-3 text-sm">
             <div className="flex items-center gap-2">
               <StatusBadge label="Persisted" tone="success" />
-              <span className="text-foreground/70">Supabase reading record inserted.</span>
+              <span className="text-[color:var(--muted)]">Supabase reading record inserted.</span>
             </div>
 
             <div className="grid gap-2 sm:grid-cols-2">
               <p>
-                <span className="text-foreground/70">Reading ID:</span> {summary.id}
+                <span className="text-[color:var(--muted)]">Reading ID:</span> {summary.id}
               </p>
               <p>
-                <span className="text-foreground/70">Account:</span> {summary.accountNumber}
+                <span className="text-[color:var(--muted)]">Account:</span> {summary.accountNumber}
               </p>
               <p>
-                <span className="text-foreground/70">Previous:</span> {summary.previousReading}
+                <span className="text-[color:var(--muted)]">Previous:</span> {summary.previousReading}
               </p>
               <p>
-                <span className="text-foreground/70">Current:</span> {summary.currentReading}
+                <span className="text-[color:var(--muted)]">Current:</span> {summary.currentReading}
               </p>
               <p>
-                <span className="text-foreground/70">Consumption:</span> {summary.consumption}
+                <span className="text-[color:var(--muted)]">Consumption:</span> {summary.consumption}
               </p>
               <p>
-                <span className="text-foreground/70">Photo Path:</span> {summary.photoPath}
+                <span className="text-[color:var(--muted)]">Photo Path:</span> {summary.photoPath}
               </p>
               <p>
-                <span className="text-foreground/70">Recorded At:</span>{" "}
+                <span className="text-[color:var(--muted)]">Recorded At:</span>{" "}
                 {new Date(summary.recordedAt).toLocaleString()}
               </p>
             </div>
 
-            <div className="border-t border-black/10 pt-3">
+            <div className="border-t border-[color:var(--border)] pt-3">
               <h4 className="text-sm font-medium">Correction Flow</h4>
-              <p className="mb-3 text-xs text-foreground/70">
+              <p className="mb-3 text-xs leading-6 text-[color:var(--muted)]">
                 Meter readers can correct their own submissions within 24 hours. All corrections are
                 permission-checked and audit logged.
               </p>
@@ -486,7 +482,7 @@ export function SubmitReadingClient() {
                     id="correctionReading"
                     value={correctionReading}
                     onChange={(event) => setCorrectionReading(event.target.value)}
-                    className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+                    className="w-full px-3 py-2 text-sm"
                     required
                   />
                 </FormField>
@@ -497,19 +493,17 @@ export function SubmitReadingClient() {
                     value={correctionReason}
                     onChange={(event) => setCorrectionReason(event.target.value)}
                     placeholder="Photo blur, digit misread, etc."
-                    className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+                    className="w-full px-3 py-2 text-sm"
                     required
                   />
                 </FormField>
 
                 {correctionError ? (
-                  <p className="sm:col-span-2 rounded-md border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-700">
-                    {correctionError}
-                  </p>
+                  <p className="app-banner app-banner-error sm:col-span-2">{correctionError}</p>
                 ) : null}
 
                 {correctionMessage ? (
-                  <p className="sm:col-span-2 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 text-sm text-emerald-700">
+                  <p className="app-banner app-banner-success sm:col-span-2">
                     {correctionMessage}
                   </p>
                 ) : null}
@@ -517,7 +511,7 @@ export function SubmitReadingClient() {
                 <button
                   type="submit"
                   disabled={isCorrecting}
-                  className="sm:col-span-2 w-full rounded-md border border-black/20 px-4 py-2 text-sm font-medium hover:bg-foreground/10 disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
+                  className="app-btn-secondary sm:col-span-2 w-full disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
                 >
                   {isCorrecting ? "Applying correction..." : "Apply Correction"}
                 </button>
@@ -525,7 +519,7 @@ export function SubmitReadingClient() {
             </div>
           </div>
         ) : (
-          <p className="text-sm text-foreground/70">
+          <p className="text-sm leading-6 text-[color:var(--muted)]">
             Fill and submit the form to persist a real reading and see confirmation details.
           </p>
         )}
