@@ -266,7 +266,7 @@ export function ReportsDashboardClient({ dataset }: ReportsDashboardClientProps)
           void handleAnomalyToggle(entry.id, !entry.isAnomaly, entry.anomalyReason);
         }}
         disabled={savingReadingId === entry.id}
-        className="rounded-md border border-black/20 px-2 py-1 text-xs hover:bg-foreground/10 disabled:cursor-not-allowed disabled:opacity-60"
+        className="app-btn-secondary app-btn-compact disabled:cursor-not-allowed disabled:opacity-60"
       >
         {entry.isAnomaly ? "Clear" : "Flag"}
       </button>,
@@ -283,7 +283,7 @@ export function ReportsDashboardClient({ dataset }: ReportsDashboardClientProps)
           <select
             value={rangeFilter}
             onChange={(event) => setRangeFilter(event.target.value)}
-            className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+            className="w-full px-3 py-2 text-sm"
           >
             {reportRangeOptions.map((option) => (
               <option key={option} value={option}>
@@ -295,7 +295,7 @@ export function ReportsDashboardClient({ dataset }: ReportsDashboardClientProps)
           <select
             value={pipelineFilter}
             onChange={(event) => setPipelineFilter(event.target.value)}
-            className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+            className="w-full px-3 py-2 text-sm"
           >
             {dataset.pipelineOptions.map((option) => (
               <option key={option} value={option}>
@@ -309,7 +309,7 @@ export function ReportsDashboardClient({ dataset }: ReportsDashboardClientProps)
             onChange={(event) =>
               setSeverityFilter(event.target.value as "all" | "warning" | "danger")
             }
-            className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+            className="w-full px-3 py-2 text-sm"
           >
             <option value="all">All severities</option>
             <option value="warning">warning</option>
@@ -323,9 +323,7 @@ export function ReportsDashboardClient({ dataset }: ReportsDashboardClientProps)
       </Card>
 
       {mutationMessage ? (
-        <div className="rounded-md border border-black/20 bg-foreground/[0.03] px-3 py-2 text-sm text-foreground/80">
-          {mutationMessage}
-        </div>
+        <div className="app-note text-sm">{mutationMessage}</div>
       ) : null}
 
       <div className="grid gap-4 xl:grid-cols-2">
@@ -334,7 +332,7 @@ export function ReportsDashboardClient({ dataset }: ReportsDashboardClientProps)
           description="Average pressure trend based on filtered live readings."
         >
           <div className="space-y-3">
-            <div className="h-52 rounded-md border border-dashed border-black/20 bg-foreground/[0.03] p-3">
+            <div className="app-placeholder-surface h-52 p-3">
               <svg
                 viewBox="0 0 100 100"
                 className="h-full w-full"
@@ -389,9 +387,9 @@ export function ReportsDashboardClient({ dataset }: ReportsDashboardClientProps)
                   <span>{bar.label}</span>
                   <span className="text-foreground/70">{bar.value} psi</span>
                 </div>
-                <div className="h-2 rounded-full bg-foreground/10">
+                <div className="h-2 rounded-full bg-[color:var(--primary-soft)]">
                   <div
-                    className="h-2 rounded-full bg-foreground"
+                    className="h-2 rounded-full bg-[linear-gradient(135deg,var(--primary),var(--primary-strong))]"
                     style={{ width: `${Math.min(100, bar.value)}%` }}
                   />
                 </div>

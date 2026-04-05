@@ -134,7 +134,7 @@ export function SubmitPressureClient() {
                 setErrors((currentErrors) => ({ ...currentErrors, accountNumber: undefined }));
               }}
               placeholder="ACC-1001"
-              className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+              className="w-full px-3 py-2 text-sm"
               required
             />
           </FormField>
@@ -154,7 +154,7 @@ export function SubmitPressureClient() {
                 setErrors((currentErrors) => ({ ...currentErrors, pressurePsi: undefined }));
               }}
               placeholder="54"
-              className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+              className="w-full px-3 py-2 text-sm"
               required
             />
           </FormField>
@@ -165,20 +165,18 @@ export function SubmitPressureClient() {
               value={notes}
               onChange={(event) => setNotes(event.target.value)}
               placeholder="Optional observation notes"
-              className="h-24 w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+              className="h-24 w-full px-3 py-2 text-sm"
             />
           </FormField>
 
           {submissionError ? (
-            <p className="sm:col-span-2 rounded-md border border-black/20 bg-foreground/[0.03] px-3 py-2 text-sm text-foreground">
-              {submissionError}
-            </p>
+            <p className="app-banner app-banner-error sm:col-span-2">{submissionError}</p>
           ) : null}
 
           <button
             type="submit"
             disabled={isSubmitting}
-            className="sm:col-span-2 w-full rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background sm:w-auto"
+            className="app-btn-primary sm:col-span-2 w-full sm:w-auto"
           >
             {isSubmitting ? "Saving..." : "Save Pressure Reading"}
           </button>
@@ -186,9 +184,7 @@ export function SubmitPressureClient() {
       </Card>
 
       {confirmationMessage ? (
-        <div className="rounded-md border border-black/20 bg-foreground/[0.03] px-4 py-3 text-sm text-foreground">
-          {confirmationMessage}
-        </div>
+        <div className="app-banner app-banner-success">{confirmationMessage}</div>
       ) : null}
 
       <Card title="Pressure Summary" description="Latest persisted pressure reading details.">

@@ -10,7 +10,7 @@ function SubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      className="rounded-md border border-black/20 px-3 py-1.5 text-sm hover:bg-foreground/10 disabled:cursor-not-allowed disabled:opacity-70"
+      className="app-btn-secondary disabled:cursor-not-allowed disabled:opacity-70"
     >
       {pending ? "Signing out..." : "Logout"}
     </button>

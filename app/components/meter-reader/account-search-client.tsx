@@ -101,7 +101,7 @@ export function AccountSearchClient() {
               value={accountNumber}
               onChange={(event) => setAccountNumber(event.target.value)}
               placeholder="e.g. ACC-1001"
-              className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+              className="w-full px-3 py-2 text-sm"
               required
             />
           </FormField>
@@ -111,7 +111,7 @@ export function AccountSearchClient() {
               id="filter"
               value={selectedFilter}
               onChange={(event) => setSelectedFilter(event.target.value)}
-              className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+              className="w-full px-3 py-2 text-sm"
             >
               {quickFilters.map((filter) => (
                 <option key={filter} value={filter}>
@@ -125,7 +125,7 @@ export function AccountSearchClient() {
             <button
               type="submit"
               disabled={isSearching}
-              className="w-full rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background sm:w-auto"
+              className="app-btn-primary w-full sm:w-auto"
             >
               {isSearching ? "Searching..." : "Search"}
             </button>
@@ -176,7 +176,7 @@ export function AccountSearchClient() {
             <StatusBadge label="Ready for submission" tone="info" />
             <Link
               href={submitHref}
-              className="rounded-md border border-black/20 px-3 py-1.5 text-sm hover:bg-foreground/10"
+              className="app-btn-secondary"
             >
               Continue to Submit Page
             </Link>

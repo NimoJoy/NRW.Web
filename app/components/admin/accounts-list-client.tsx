@@ -97,13 +97,13 @@ export function AccountsListClient({ initialAccounts }: AccountsListClientProps)
           value={query}
           onChange={(event) => handleQueryChange(event.target.value)}
           placeholder="Search account, customer, or pipeline"
-          className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+          className="w-full px-3 py-2 text-sm"
         />
 
         <select
           value={statusFilter}
           onChange={(event) => handleStatusChange(event.target.value as StatusFilter)}
-          className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+          className="w-full px-3 py-2 text-sm"
         >
           {statusFilters.map((option) => (
             <option key={option} value={option}>
@@ -133,7 +133,7 @@ export function AccountsListClient({ initialAccounts }: AccountsListClientProps)
             type="button"
             onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}
             disabled={safeCurrentPage === 1}
-            className="rounded-md border border-black/20 px-3 py-1.5 text-sm disabled:cursor-not-allowed disabled:opacity-60"
+            className="app-btn-secondary app-btn-compact disabled:cursor-not-allowed disabled:opacity-60"
           >
             Previous
           </button>
@@ -142,7 +142,7 @@ export function AccountsListClient({ initialAccounts }: AccountsListClientProps)
             type="button"
             onClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}
             disabled={safeCurrentPage === totalPages}
-            className="rounded-md border border-black/20 px-3 py-1.5 text-sm disabled:cursor-not-allowed disabled:opacity-60"
+            className="app-btn-secondary app-btn-compact disabled:cursor-not-allowed disabled:opacity-60"
           >
             Next
           </button>

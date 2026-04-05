@@ -82,7 +82,7 @@ export function LoginForm({ initialMessage }: LoginFormProps) {
               name="companyId"
               value={companyId}
               onChange={(event) => setCompanyId(event.target.value as SupportedCompanyId)}
-              className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+              className="w-full px-3 py-2 text-sm"
               required
             >
               {supportedCompanies.map((company) => (
@@ -93,14 +93,14 @@ export function LoginForm({ initialMessage }: LoginFormProps) {
             </select>
           </FormField>
 
-          <p className="text-sm text-black/70">
+          <p className="text-sm leading-6 text-[color:var(--muted)]">
             Selected: {getSupportedCompany(companyId).name}. Continue to sign in with your role
             account.
           </p>
         </>
       ) : (
         <>
-          <p className="text-sm text-black/70">
+          <p className="text-sm leading-6 text-[color:var(--muted)]">
             Company context: {getSupportedCompany(companyId).name} ({companyId})
           </p>
 
@@ -113,7 +113,7 @@ export function LoginForm({ initialMessage }: LoginFormProps) {
               onChange={(event) => setEmail(event.target.value)}
               placeholder="you@example.com"
               autoComplete="email"
-              className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+              className="w-full px-3 py-2 text-sm"
               required
             />
           </FormField>
@@ -127,7 +127,7 @@ export function LoginForm({ initialMessage }: LoginFormProps) {
               onChange={(event) => setPassword(event.target.value)}
               placeholder="••••••••"
               autoComplete="current-password"
-              className="w-full rounded-md border border-black/20 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-foreground/20"
+              className="w-full px-3 py-2 text-sm"
               required
             />
           </FormField>
@@ -135,15 +135,13 @@ export function LoginForm({ initialMessage }: LoginFormProps) {
       )}
 
       {errorMessage ? (
-        <p className="rounded-md border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-700">
-          {errorMessage}
-        </p>
+        <p className="app-banner app-banner-error">{errorMessage}</p>
       ) : null}
 
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background disabled:cursor-not-allowed disabled:opacity-70"
+        className="app-btn-primary w-full disabled:cursor-not-allowed disabled:opacity-70"
       >
         {isSubmitting ? "Signing in..." : step === 1 ? "Continue" : "Sign in"}
       </button>
@@ -156,7 +154,7 @@ export function LoginForm({ initialMessage }: LoginFormProps) {
             setStep(1);
             setErrorMessage(null);
           }}
-          className="w-full rounded-md border border-black/20 px-4 py-2 text-sm font-medium disabled:cursor-not-allowed disabled:opacity-70"
+          className="app-btn-secondary w-full disabled:cursor-not-allowed disabled:opacity-70"
         >
           Change company
         </button>

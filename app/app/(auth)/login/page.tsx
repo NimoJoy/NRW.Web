@@ -24,7 +24,10 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
   const initialMessage = getReasonMessage(resolvedSearchParams?.reason);
 
   return (
-    <Card title="Sign in" description="Use your account credentials to continue.">
+    <Card
+      title="Secure sign in"
+      description="Choose your water company, then access billing, field submissions, reporting, and operational monitoring with your assigned role."
+    >
       <LoginForm initialMessage={initialMessage} />
     </Card>
   );
